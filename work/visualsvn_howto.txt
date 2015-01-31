@@ -30,8 +30,8 @@ svn add ファイル名
 svn delete ファイル名 
 
 ・フォルダー追加
-svn import src http://admin@localhost:8080/svn/act01/src -m "ソース"
-svn import フォルダ http://admin@localhost:8080/svn/act01/フォルダ -m "テスト"
+svn import src http://admin@localhost:8080/svn/act01/trunk/src -m "ソース"
+svn import フォルダ http://admin@localhost:8080/svn/act01/trunk/フォルダ -m "テスト"
 
 ・ファイル変更の破棄
 svn revert ファイル名
@@ -46,6 +46,14 @@ A 追加予定のファイル
 D 削除予定のファイル
 
 
+
+
+svn copy http://admin@localhost:8080/svn/act01/trunk http://admin@localhost:8080/svn/act01/tags/test01 -m "test "
+
+
+
+
+■フォルダ説明
 リポジトリに作成する、trunk, branches, tagsにはそれぞれ意味がある。
 
     trunk ：主な開発ラインを管理するディレクトリ
@@ -88,3 +96,7 @@ trunk → branches → trunk( → tags) → branches → trunk( → tags) ……
     動作確認済みの状態でブランチをトランクにマージする
     トランクからタグを作成する
     トランクからブランチを作成する
+
+
+
+
