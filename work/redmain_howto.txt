@@ -1,0 +1,5 @@
+url:http://localhost/redmine
+user:admin
+pass:asada1971
+¡İ’èƒtƒ@ƒCƒ‹
+C:\Bitnami\redmine-2.6.1-1\apps\redmine\htdocs\config\configuration.yml

@@ -1,0 +1,90 @@
+ServerPort:8080
+http://
+"C:\webact\VisualSVN Server\bin"
+■user
+id:admin/admin
+
+■リポジトリ
+http://localhost:8080/svn/act01
+
+
+■操作
+set path=%PATH%;"C:\webact\VisualSVN Server\bin"
+cd C:\webact\00_act01
+cd C:\webact\00_act01\act01
+
+・チェックアウト
+cd C:\webact\00_act01
+svn checkout http://admin@localhost:8080/svn/act01
+
+・更新
+svn update src
+
+・コミット
+svn commit [ファイル名]|[フォルダ] -m "テスト"
+※ファイル名、フォルダー名を省略するとカレントディレクトリとその配下ディレクトリ全部を対象
+
+・ファイル追加
+svn add ファイル名
+・ファイル削除
+svn delete ファイル名 
+
+・フォルダー追加
+svn import src http://admin@localhost:8080/svn/act01/src -m "ソース"
+svn import フォルダ http://admin@localhost:8080/svn/act01/フォルダ -m "テスト"
+
+・ファイル変更の破棄
+svn revert ファイル名
+
+・状態を確認
+svn status
+
+<凡例>
+? ファイルを作成したがcommitしていないなどの理由で、バージョン管理されていないファイル
+M 修正されたファイル
+A 追加予定のファイル
+D 削除予定のファイル
+
+
+リポジトリに作成する、trunk, branches, tagsにはそれぞれ意味がある。
+
+    trunk ：主な開発ラインを管理するディレクトリ
+    tags ：変更を加えることが許されないコピー（タグ）を管理するディレクトリ
+    branches ：変更を加えることができるコピー（ブランチ）を管理するディレクトリ
+
+trunkについて
+
+trunkは動作が保証されたソースファイルの本流である。本流のデータなので1つしか存在しない。trunks(英語の複数形)ではないので、基本的にソースの本流は1つしか存在しない。
+　
+ディレクトリ構成は以下のようになる。
+　
+……/trunk/対象のファイル
+　
+branchesについて
+
+branchesは各機能の開発の作業場。不具合がある場合もある。branchesは英語の複数形なのでbranches内には複数のブランチを作成して作業する。
+　
+ディレクトリ構成としては以下のようになる。
+　
+……/branches/任意のブランチ名/対象のファイル
+　
+tagsについて
+
+tagsは納品時など、決まったタイミングのtrunkを取っておく場所。tagsは英語の複数形なのでtags内には複数のタグを作成して作業する。
+　
+ディレクトリ構成は以下のようになる。
+　
+……/tags/任意のタグ名/対象のファイル
+　
+　
+これらは
+　
+trunk → branches → trunk( → tags) → branches → trunk( → tags) ……
+　
+という順に上手く使い分けながら作業する。
+　
+具代的には、以下のような流れになる。
+
+    動作確認済みの状態でブランチをトランクにマージする
+    トランクからタグを作成する
+    トランクからブランチを作成する

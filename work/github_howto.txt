@@ -1,0 +1,3 @@
+url:https://github.com
+
+1 set up git でクライアントアプリケーションをインストールする
