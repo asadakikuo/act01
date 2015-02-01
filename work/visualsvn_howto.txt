@@ -1,7 +1,16 @@
 ■WEBDEV
-1.
-httpd.confに追加
+1.httpd.confを編集
 
+コメントアウトされている２行を活かす
+#LoadModule dav_module modules/mod_dav.so
+#LoadModule dav_fs_module modules/mod_dav_fs.so
+
+以下の2行を追加。
+
+LoadModule dav_svn_module modules/mod_dav_svn.so
+LoadModule authz_svn_module modules/mod_authz_svn.so
+
+追加
 Include "/opt/bitnami/apache2/conf/extra/httpd-svn.conf"
 
 ２．httpd-svn.confファイルを作成
@@ -9,7 +18,7 @@ Include "/opt/bitnami/apache2/conf/extra/httpd-svn.conf"
 <Location /svn>
     DAV svn
     # enable view for repositories parent directories
-    SVNPath "C:/svnrepository"
+    SVNPath "C:/svnrepository/act01"
     #SVNParentPath ""
     #SVNListParentPath On
   
@@ -25,6 +34,8 @@ Include "/opt/bitnami/apache2/conf/extra/httpd-svn.conf"
 cd C:\Bitnami\redmine-2.6.0-1\apache2\bin
 htpasswd -c ../conf/.htpasswd.svn admin
 
+4．モジュールファイルをコピー
+subversion/bin にある mod_dav_svn.so と mod_authz_svn.so を、apache/bin にコピー。
 
 
 ■subversionのリポジトリの設定
@@ -68,7 +79,7 @@ svn mkdir file://localhost/svnrepository/act01/tags -m "create"
 ここから下は自宅の環境
 -----------------------------------------------------------
 ■リポジトリ
-没 http://localhost:8080/svn/act01
+http://localhost:8080/svn/act01
 
 ■操作
 set path=%PATH%;"C:\webact\VisualSVN Server\bin"
