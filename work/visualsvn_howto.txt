@@ -1,3 +1,55 @@
+■WEBDEV
+1.
+httpd.confに追加
+
+Include "/opt/bitnami/apache2/conf/extra/httpd-svn.conf"
+
+２．httpd-svn.confファイルを作成
+# Subversion
+<Location /svn>
+    DAV svn
+    # enable view for repositories parent directories
+    SVNPath "C:/svnrepository"
+    #SVNParentPath ""
+    #SVNListParentPath On
+  
+    # read/write accesses force Basic auth
+    AuthType Basic
+    AuthName "Subversion repository"
+    AuthUserFile C:/Bitnami/redmine-2.6.0-1/apache2/conf/.htpasswd.svn
+    Require valid-user
+</Location>
+
+3.Basic認証で使用するパスワードファイルを作成
+
+cd C:\Bitnami\redmine-2.6.0-1\apache2\bin
+htpasswd -c ../conf/.htpasswd.svn admin
+
+
+
+■subversionのリポジトリの設定
+utl:http://mattari.sumomo.ne.jp/2010/08/bitnami-redmine-stack-%E3%81%A7-subversion-%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/
+を参考に設定
+C:\svnrepository\act01\conf にある svnserve.conf を設定します。以下は単純な例です。 
+
+
+[general] 
+anon-access = read 
+auth-access = write 
+password-db = passwd
+
+passwd ファイルにユーザ名とパスワードを設定します。 
+
+
+[users] 
+admin = admin
+
+redmineに設定するＵＲＬ
+svn://localhost/svnrepository/act01
+
+■svnインストールフォルダ
+C:\Bitnami\redmine-2.6.0-1\subversion\bin
+
 ServerPort:8080
 http://
 "C:\webact\VisualSVN Server\bin"
@@ -5,8 +57,18 @@ http://
 id:admin/admin
 
 ■リポジトリ
-http://localhost:8080/svn/act01
 
+svnadmin create C:\svnrepository\act01
+svn mkdir file://localhost/svnrepository/act01/trunk -m "create"
+svn mkdir file://localhost/svnrepository/act01/branches -m "create"
+svn mkdir file://localhost/svnrepository/act01/tags -m "create"
+
+
+-----------------------------------------------------------
+ここから下は自宅の環境
+-----------------------------------------------------------
+■リポジトリ
+没 http://localhost:8080/svn/act01
 
 ■操作
 set path=%PATH%;"C:\webact\VisualSVN Server\bin"
