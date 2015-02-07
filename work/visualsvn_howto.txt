@@ -35,8 +35,13 @@ cd C:\Bitnami\redmine-2.6.0-1\apache2\bin
 htpasswd -c ../conf/.htpasswd.svn admin
 
 4．モジュールファイルをコピー
-subversion/bin にある mod_dav_svn.so と mod_authz_svn.so を、apache/bin にコピー。
+subversion/bin にある mod_dav_svn.so と mod_authz_svn.so を、apache2/module にコピー。
 
+5.
+authzsvn.confを修正
+
+[/]
+admin = rw
 
 ■subversionのリポジトリの設定
 utl:http://mattari.sumomo.ne.jp/2010/08/bitnami-redmine-stack-%E3%81%A7-subversion-%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/
@@ -61,19 +66,18 @@ svn://localhost/svnrepository/act01
 ■svnインストールフォルダ
 C:\Bitnami\redmine-2.6.0-1\subversion\bin
 
-ServerPort:8080
-http://
-"C:\webact\VisualSVN Server\bin"
+svn://localhost:3690
 ■user
 id:admin/admin
 
 ■リポジトリ
-
+set PATH=%PATH%;C:\Bitnami\redmine-2.6.1-1\subversion\bin
 svnadmin create C:\svnrepository\act01
 svn mkdir file://localhost/svnrepository/act01/trunk -m "create"
 svn mkdir file://localhost/svnrepository/act01/branches -m "create"
 svn mkdir file://localhost/svnrepository/act01/tags -m "create"
 
+svn checkout svn://admin@localhost/svnrepository/act01
 
 -----------------------------------------------------------
 ここから下は自宅の環境
@@ -102,7 +106,7 @@ svn add ファイル名
 ・ファイル削除
 svn delete ファイル名 
 
-・フォルダー追加
+・ファイルをインポートする
 svn import src http://admin@localhost:8080/svn/act01/trunk/src -m "ソース"
 svn import フォルダ http://admin@localhost:8080/svn/act01/trunk/フォルダ -m "テスト"
 
@@ -172,4 +176,6 @@ trunk → branches → trunk( → tags) → branches → trunk( → tags) ……
 
 
 
+svnadmin create C:\svnrepository\android
 
+svn checkout svn://admin@localhost/svnrepository/android
